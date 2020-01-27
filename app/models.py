@@ -15,7 +15,7 @@ permissions = db.Table('permissions',
 
 # Build secondary table for many to many between facilities and persons
 workers = db.Table('workers',
-    db.Column('facility_id', db.Integer, db.ForeignKey('facility.facility_id'))
+    db.Column('facility_id', db.Integer, db.ForeignKey('facility.facility_id')),
     db.Column('person_id', db.Integer, db.ForeignKey('person.person_id'))
 )
 
@@ -31,7 +31,7 @@ class Encounter(db.Model):
     handling_time = db.Column(db.Integer)
     holding_time = db.Column(db.Integer)
     crate_time = db.Column(db.Integer)
-    comments = db.Column(db.string(255))
+    comments = db.Column(db.String(255))
 
     def __repr__(self):
         return"<Encounter(person='%s', animal='%s', date='%s')" % (self.person_id, self.animal_id, self.enc_date)
@@ -51,14 +51,42 @@ class Person(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     last_name = db.Column(db.String(60), index=True)
+    user_name = db.Column(db.String(60), index=True, unique=True)
+    password_hash = db.Column(db.String(128))
     first_name = db.Column(db.String(60), index=True)
     role = db.Column(db.Integer, db.ForeignKey('roles.id'))
     is_active = db.Column(db.Boolean, index=True)
-    comments = db.Column(db.string(255))
+    is_admin = db.Column(db.Boolean, default=False)
+    comments = db.Column(db.String(255))
     animals = db.relationship('Animal', secondary='permissions', backref='persons', lazy = 'dynamic')
     
     def __repr__(self):
-        return "<Person name='%s', '%s')" % (self.first_name, self.last_name)
+        return "<Person name='%s', '%s', '%s')" % (self.first_name, self.last_name, self.user_name)
+
+    @property
+    def password(self):
+        """
+        Prevent pasword from being accessed
+        """
+        raise AttributeError('password is not a readable attribute.')
+
+    @password.setter
+    def password(self, password):
+        """
+        Set password to a hashed password
+        """
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        """
+        Check if hashed password matches actual password
+        """
+        return check_password_hash(self.password_hash, password)
+
+# Set up user_loader
+@login_manager.user_loader
+def load_user(user_id):
+    return Person.query.get(int(user_id))
 
 class Animal_Type(db.Model):
     __tablename__ = 'animal_type'
@@ -110,7 +138,7 @@ class Animal(db.Model):
     animal_status = db.Column(db.Integer, db.ForeignKey('Animal_Status.id'))
     animal_group = db.Column(db.Integer, db.ForeignKey('Animal_Group.id'))
     max_enc_per_day = db.Column(db.Integer)
-    comments = db.Column(db.string(255))
+    comments = db.Column(db.String(255))
 
     def __repr__(self):
         return "<Animal='%s')" % (self.name)

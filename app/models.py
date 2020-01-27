@@ -9,14 +9,14 @@ from app import db, login_manager
 
 # Build secondary table for many to many between animals and persons
 permissions = db.Table('permissions',
-    db.Column('animal_id', db.Integer, db.ForeignKey('animal.animal_id')), 
-    db.Column('person_id', db.Integer, db.ForeignKey('person.person_id'))
+    db.Column('animal_id', db.Integer, db.ForeignKey('animals.id')), 
+    db.Column('person_id', db.Integer, db.ForeignKey('persons.id'))
 )
 
 # Build secondary table for many to many between facilities and persons
 workers = db.Table('workers',
-    db.Column('facility_id', db.Integer, db.ForeignKey('facility.facility_id')),
-    db.Column('person_id', db.Integer, db.ForeignKey('person.person_id'))
+    db.Column('facility_id', db.Integer, db.ForeignKey('facilities.id')),
+    db.Column('person_id', db.Integer, db.ForeignKey('persons.id'))
 )
 
 class Encounter(db.Model):
@@ -24,7 +24,7 @@ class Encounter(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     enc_date = db.Column(db.Date, index=True)
-    person_id = db.Column(db.Integer, db.ForeignKey('person.id'))
+    person_id = db.Column(db.Integer, db.ForeignKey('persons.id'))
     animal_id = db.Column(db.Integer, db.ForeignKey('animals.id'))
     check_out_time = db.Column(db.DateTime)
     check_in_time = db.Column(db.DateTime)
@@ -45,6 +45,17 @@ class Facility(db.Model):
 
     def __repr__(self):
         return "<Facility name='%s')" % (self.name)
+
+class Role(db.Model):
+    __tablename__='roles'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+
+    def __repr__(self):
+        return "<Role name='%s')" % (self.name)
+
+    
 
 class Person(db.Model):
     __tablename__ = 'persons'
@@ -129,14 +140,14 @@ class Animal_Group(db.Model):
  
 
 class Animal(db.Model):
-    __tablename__ = 'animal'
+    __tablename__ = 'animals'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), index=True)
-    animal_type = db.Column(db.Integer, db.ForeignKey('Animal_Type.id'))
-    animal_string = db.Column(db.Integer, db.ForeignKey('Animal_String.id'))
-    animal_status = db.Column(db.Integer, db.ForeignKey('Animal_Status.id'))
-    animal_group = db.Column(db.Integer, db.ForeignKey('Animal_Group.id'))
+    animal_type = db.Column(db.Integer, db.ForeignKey('animal_type.id'))
+    animal_string = db.Column(db.Integer, db.ForeignKey('animal_string.id'))
+    animal_status = db.Column(db.Integer, db.ForeignKey('animal_status.id'))
+    animal_group = db.Column(db.Integer, db.ForeignKey('animal_group.id'))
     max_enc_per_day = db.Column(db.Integer)
     comments = db.Column(db.String(255))
 

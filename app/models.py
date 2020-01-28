@@ -62,7 +62,8 @@ class Person(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     last_name = db.Column(db.String(60), index=True)
-    user_name = db.Column(db.String(60), index=True, unique=True)
+    username = db.Column(db.String(60), index=True, unique=True)
+    email = db.Column(db.String(80), index=True)
     password_hash = db.Column(db.String(128))
     first_name = db.Column(db.String(60), index=True)
     role = db.Column(db.Integer, db.ForeignKey('roles.id'))
@@ -70,9 +71,10 @@ class Person(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     comments = db.Column(db.String(255))
     animals = db.relationship('Animal', secondary='permissions', backref='persons', lazy = 'dynamic')
+    facility = db.Column(db.Integer, db.ForeignKey('facilities.id'))
     
     def __repr__(self):
-        return "<Person name='%s', '%s', '%s')" % (self.first_name, self.last_name, self.user_name)
+        return "<Person name='%s', '%s', '%s')" % (self.first_name, self.last_name, self.username)
 
     @property
     def password(self):

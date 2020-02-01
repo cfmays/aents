@@ -1,0 +1,30 @@
+<!-- app/templates/admin/facilities/facility.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_facility %}
+        Add Facility
+    {% else %}
+        Edit Facility
+    {% endif %}
+{% endblock %}
+{% block body %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+            {% if add_facilityt %}
+                <h1>Add Facility</h1>
+            {% else %}
+                <h1>Edit Facility</h1>
+            {% endif %}
+            <br/>
+            {{ wtf.quick_form(form) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

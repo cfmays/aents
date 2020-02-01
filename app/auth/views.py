@@ -50,11 +50,16 @@ def login():
         person = Person.query.filter_by(username=form.username.data).first()
         if person is not None and person.verify_password(
                 form.password.data):
+            
             # log person in
             login_user(person)
 
-            # redirect to the dashboard page after login
-            return redirect(url_for('home.dashboard'))
+            # redirect to the appropriate dashboard page
+            if person.is_admin:
+                return redirect(url_for('home.admin_dashboard'))
+            else:
+                return redirect(url_for('home.dashboard'))
+           #return redirect('http://www.ibm.com')
 
         # when login details are incorrect
         else:

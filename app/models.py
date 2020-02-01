@@ -41,6 +41,7 @@ class Facility(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
+    description = db.Column(db.String(128))
     persons = db.relationship('Person', secondary='workers', backref='facilities', lazy = 'dynamic')
 
     def __repr__(self):
@@ -51,13 +52,14 @@ class Role(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
+    description = db.Column(db.String(128))
 
     def __repr__(self):
         return "<Role name='%s')" % (self.name)
 
     
 
-class Person(db.Model):
+class Person(UserMixin, db.Model):
     __tablename__ = 'persons'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -67,15 +69,12 @@ class Person(db.Model):
     password_hash = db.Column(db.String(128))
     first_name = db.Column(db.String(60), index=True)
     role = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    is_active = db.Column(db.Boolean, index=True)
+    is_person_active = db.Column(db.Boolean, index=True)
     is_admin = db.Column(db.Boolean, default=False)
     comments = db.Column(db.String(255))
     animals = db.relationship('Animal', secondary='permissions', backref='persons', lazy = 'dynamic')
     facility = db.Column(db.Integer, db.ForeignKey('facilities.id'))
     
-    def __repr__(self):
-        return "<Person name='%s', '%s', '%s')" % (self.first_name, self.last_name, self.username)
-
     @property
     def password(self):
         """
@@ -95,6 +94,10 @@ class Person(db.Model):
         Check if hashed password matches actual password
         """
         return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return "<Person name='%s', '%s', '%s')" % (self.first_name, self.last_name, self.username)
+
 
 # Set up user_loader
 @login_manager.user_loader

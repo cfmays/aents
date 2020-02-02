@@ -1,7 +1,7 @@
 # app/auth/forms.py
 
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, ValidationError
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 from ..models import Person
@@ -11,7 +11,8 @@ class RegistrationForm(FlaskForm):
     """
     Form for users to create new account
     """
-    facility = StringField('Facilty', validators=[DataRequired()]) # added cfm
+    #    group_id = SelectField(u'Group', coerce=int)
+    facility_id = SelectField(u'Facilty', coerce=int) # added cfm
     email = StringField('Email', validators=[Email()]) # removed DataRequired() cfm; also, email validator may not accept blamks?
     username = StringField('User Name', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])

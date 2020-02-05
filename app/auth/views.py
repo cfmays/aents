@@ -2,17 +2,11 @@
 
 from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
-# from WTForms import SelectField
 
 from . import auth
 from .forms import LoginForm, RegistrationForm
 from .. import db
 from ..models import Person, Facility
-
-# def edit_user(request, id):
-#     user = User.query.get(id)
-#     form = UserDetails(request.POST, obj=user)
-#     form.group_id.choices = [(g.id, g.name) for g in Group.query.order_by('name')]
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -23,7 +17,7 @@ def register():
     form = RegistrationForm()
     form.facility_id.choices = [(f.id, f.name) for f in Facility.query.order_by('name')]
     if form.validate_on_submit():
-        person = Person(facility=form.facility_id.data,
+        person = Person(#facility=form.facility_id.data,
                             email=form.email.data,
                             username=form.username.data,
                             first_name=form.first_name.data,

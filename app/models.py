@@ -8,7 +8,7 @@ from app import db, login_manager
 # [START model]
 
 # Build secondary table for many to many between animals and persons
-permissions = db.Table('permissions',
+permissions = db.Table('permissions', 
     db.Column('animal_id', db.Integer, db.ForeignKey('animals.id')), 
     db.Column('person_id', db.Integer, db.ForeignKey('persons.id'))
 )
@@ -73,7 +73,7 @@ class Person(UserMixin, db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     comments = db.Column(db.String(255))
     animals = db.relationship('Animal', secondary='permissions', backref='persons', lazy = 'dynamic')
-    facility = db.Column(db.Integer, db.ForeignKey('facilities.id'))
+    #facility = db.Column(db.Integer, db.ForeignKey('facilities.id'))
     
     @property
     def password(self):

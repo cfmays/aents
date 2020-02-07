@@ -68,7 +68,7 @@ class Person(UserMixin, db.Model):
     email = db.Column(db.String(80), index=True)
     password_hash = db.Column(db.String(128))
     first_name = db.Column(db.String(60), index=True)
-    role = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     is_person_active = db.Column(db.Boolean, index=True)
     is_admin = db.Column(db.Boolean, default=False)
     comments = db.Column(db.String(255))

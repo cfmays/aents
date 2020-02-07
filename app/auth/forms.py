@@ -12,7 +12,7 @@ class RegistrationForm(FlaskForm):
     Form for users to create new account
     """
     facility_id = SelectField(u'Facilty', coerce=int) 
-    #role_id = SelectField(u'Role', coerce=int)
+    role_id = SelectField(u'Role', coerce=int)
     email = StringField('Email', validators=[
                                         Optional(),
                                         Email()]) # removed validators=[Email()] so that user can leave it blank

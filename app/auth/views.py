@@ -6,7 +6,7 @@ from flask_login import login_required, login_user, logout_user
 from . import auth
 from .forms import LoginForm, RegistrationForm
 from .. import db
-from ..models import Person, Facility
+from ..models import Person, Facility, Role
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -16,8 +16,10 @@ def register():
     """
     form = RegistrationForm()
     form.facility_id.choices = [(f.id, f.name) for f in Facility.query.order_by('name')]
+    form.role_id.choices = [(r.id, r.name) for r in Role.query]
     if form.validate_on_submit():
         person = Person( email=form.email.data,
+                            role_id = form.role_id.data,
                             username=form.username.data,
                             first_name=form.first_name.data,
                             last_name=form.last_name.data,

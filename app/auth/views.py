@@ -17,8 +17,7 @@ def register():
     form = RegistrationForm()
     form.facility_id.choices = [(f.id, f.name) for f in Facility.query.order_by('name')]
     if form.validate_on_submit():
-        person = Person(#facility=form.facility_id.data,
-                            email=form.email.data,
+        person = Person( email=form.email.data,
                             username=form.username.data,
                             first_name=form.first_name.data,
                             last_name=form.last_name.data,
@@ -27,6 +26,12 @@ def register():
         # add person to the database
         db.session.add(person)
         db.session.commit()
+
+        # add the association to the worker's table
+        facility = Facility.query.filter_by(id=form.facility_id.data).first()
+        facility.persons.append(person)
+        db.session.commit()
+
         flash('You have successfully registered! You may now login.')
 
         # redirect to the login page

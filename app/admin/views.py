@@ -51,7 +51,7 @@ def add_facility():
             # add facility to the database
             db.session.add(facility)
             db.session.commit()
-            flash(__name__) #'You have successfully added a new facility.')
+            flash('You have successfully added a new facility.')
         except:
             # in case facility name already exists
             flash('Error: facility name already exists.')

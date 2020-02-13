@@ -53,12 +53,12 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
     description = db.Column(db.String(128))
-
+    people = db.relationship('Person', backref='role',
+                                lazy='dynamic')
     def __repr__(self):
         return "<Role name='%s')" % (self.name)
 
     
-
 class Person(UserMixin, db.Model):
     __tablename__ = 'persons'
 

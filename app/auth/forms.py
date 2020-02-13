@@ -13,7 +13,7 @@ class RegistrationForm(FlaskForm):
     """
     facility_id = SelectField(u'Facilty', coerce=int) 
     role_id = SelectField(u'Role', coerce=int)
-    email = StringField('Email', validators=[
+    email = StringField('Email (optional)', validators=[
                                         Optional(),
                                         Email()]) # removed validators=[Email()] so that user can leave it blank
     username = StringField('User Name', validators=[DataRequired()])

@@ -27,7 +27,7 @@ def register():
 
         # add person to the database
         db.session.add(person)
-        db.session.commit()
+        #db.session.commit()
 
         # add the association to the worker's table
         facility = Facility.query.filter_by(id=form.facility_id.data).first()

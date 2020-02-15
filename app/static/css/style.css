@@ -92,6 +92,12 @@ p.copyright {
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
 }
 
+.btn-group-label {
+    position: relative;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    padding-left: 0%;
+}
 .lead {
     font-size: 18px;
     font-weight: 400;
@@ -124,3 +130,5 @@ p.copyright {
     margin-left: auto;
     margin-right: auto;
 }
+
+.top-buffer { margin-top:20px; }

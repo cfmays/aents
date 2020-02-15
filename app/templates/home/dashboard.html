@@ -3,17 +3,25 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block body %}
-<div class="intro-header">
-    <div class="container">
+<div class="container">
+<div class="btn-group-label">
+    <h3>Manage encounters</h3>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="intro-message">
-                    <h1>The Dashboard</h1>
-                    <hr class="intro-divider">
-                    </ul>
-                </div>
-            </div>
+            <a class=text-left>
+            <a class="btn btn-primary btn-block" href="#" role="button">Open a new encounter</a>
+        </a>
         </div>
-    </div>
+        <div class="row top-buffer">
+            <a class="btn btn-primary btn-block" href="#" role="button">Close an open encounter</a>
+        </div>
+        <div class="row top-buffer">
+            <a class="btn btn-primary btn-block" href="#" role="button">Enter a completed encounter</a>
+        </div>
+        <div class="row top-buffer">
+            <a class="btn btn-primary btn-block" href="#" role="button">Edit an existing encounter</a>
+        </div>    
+    </div>    
 </div>
 {% endblock %}
+
+.top-buffer { margin-top:20px; }

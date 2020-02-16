@@ -26,6 +26,7 @@ class Encounter(db.Model):
     enc_date = db.Column(db.Date, index=True)
     person_id = db.Column(db.Integer, db.ForeignKey('persons.id'))
     animal_id = db.Column(db.Integer, db.ForeignKey('animals.id'))
+    facility_id = db.Column(db.Integer, db.ForeignKey('facilities.id'))
     check_out_time = db.Column(db.DateTime)
     check_in_time = db.Column(db.DateTime)
     handling_time = db.Column(db.Integer)

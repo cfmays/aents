@@ -51,4 +51,7 @@ def create_app(config_name):
     from .home import home as home_blueprint
     app.register_blueprint(home_blueprint)
 
+    from .encounter import encounter as encounter_blueprint
+    app.register_blueprint(encounter_blueprint)
+
     return app

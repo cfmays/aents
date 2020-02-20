@@ -3,18 +3,23 @@
 from flask import render_template
 from flask_login import current_user, login_required
 
-from .forms import OpenEncounterForm
+from .forms import OpenEncounterForm 
 
 from . import encounter
 
-from .forms import LoginForm, RegistrationForm
+from .forms import OpenEncounterForm
 from .. import db
 from ..models import Person, Facility, Role
 
-@encounter.route('/open_encounter', methods=['GET', 'POST'])
-def open_encounter():
+@encounter.route('/open_new_encounter', methods=['GET', 'POST'])
+@login_required
+def open_new_encounter():
     """
-    Render the open_encounter template on the / route
+    Open a new encounter
     """
-    form = OpenEncounterForm
-    return render_template('encounter/open_encounter.html', title="Open Encounter")
+
+    #facilities = Facility.query.all()
+    form = OpenEncounterForm()
+    return render_template('encounters/open_encounter.html', 
+                           form=form,
+                           title="Open New Encounter")

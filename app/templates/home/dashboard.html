@@ -7,7 +7,11 @@
     <div class="btn-group-label">
         <h3>Manage encounters</h3>
         <div class="row left-buffer">
+<<<<<<< HEAD
             <a class="btn btn-primary" href="#" role="button">Open a new encounter</a>
+=======
+            <a href="{{ url_for('encounter.open_new_encounter') }}" class="btn btn-primary">
+>>>>>>> encounters
         </div>
         <div class="row top-left-buffer">
             <a class="btn btn-primary" href="#" role="button">Close an open encounter</a>
@@ -21,5 +25,3 @@
     </div>    
 </div>
 {% endblock %}
-
-.top-buffer { margin-top:20px; }

@@ -4,9 +4,9 @@ from flask import abort, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 
 from . import admin
-from .forms import FacilityForm, RoleForm
+from .forms import FacilityForm, RoleForm 
 from .. import db
-from ..models import Facility, Role
+from ..models import Facility, Role, Encounter
 
 def check_admin():
     """
@@ -203,3 +203,4 @@ def delete_role(id):
     return redirect(url_for('admin.list_roles'))
 
     return render_template(title="Delete Role")
+

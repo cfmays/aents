@@ -12,5 +12,5 @@ class OpenEncounterForm(FlaskForm):
     """   
 
     #animal_id = SelectField(u'Animal', coerce=int)
-    #only_my_animals = BooleanField(default=True, label='Show only animals I have permission for')
+    only_my_animals = BooleanField(default=True, label='Show only animals I have permission for')
     submit = SubmitField('Save')

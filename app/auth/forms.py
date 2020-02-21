@@ -1,7 +1,7 @@
 # app/auth/forms.py
 
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, ValidationError, SelectField
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, SelectField, RadioField
 from wtforms.validators import DataRequired, Email, EqualTo, Optional
 
 from ..models import Person
@@ -34,6 +34,7 @@ class LoginForm(FlaskForm):
     """
     Form for users to login
     """
+    login_kind = RadioField('Type of login', default = 'Facility', choices=[('Facility','Facility-wide login'),('Individual','Individual login')])
     username = StringField('User name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')

@@ -72,6 +72,7 @@ class Person(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     is_person_active = db.Column(db.Boolean, index=True)
     is_admin = db.Column(db.Boolean, default=False)
+    is_facility = db.Column(db.Boolean, default=True)
     comments = db.Column(db.String(255))
     animals = db.relationship('Animal', secondary='permissions', backref='persons', lazy = 'dynamic')
     #facility = db.Column(db.Integer, db.ForeignKey('facilities.id'))

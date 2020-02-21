@@ -204,3 +204,13 @@ def delete_role(id):
 
     return render_template(title="Delete Role")
 
+@admin.route('/people')
+@login_required
+def list_people():
+    check_admin()
+    """
+    List all people at this facility
+    """
+    roles = Role.query.all()
+    return render_template('admin/roles/roles.html',
+                           roles=roles, title='Roles')

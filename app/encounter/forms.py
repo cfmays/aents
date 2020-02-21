@@ -8,9 +8,17 @@ from ..models import Person, Animal, Encounter
 
 class OpenEncounterForm(FlaskForm):
     """
-    Form for users to open a new encounter
+    Form for individual users to open a new encounter
     """   
-
     #animal_id = SelectField(u'Animal', coerce=int)
     only_my_animals = BooleanField(default=True, label='Show only animals I have permission for')
     submit = SubmitField('Save')
+
+class OpenEncounterFormFacility(FlaskForm):
+    """
+    Form for facility-wide users to open a new encounter
+    """     
+    person_id = SelectField(u'Person', coerce=int)
+    animal_id = SelectField(u'Animal', coerce=int)
+    submit = SubmitField('Save')
+    

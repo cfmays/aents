@@ -1,0 +1,23 @@
+<!-- app/templates/home/dashboard_facility.html -->
+
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="btn-group-label">
+        <h3>Manage encounters</h3>
+        <div class="row left-buffer">
+             <a class="btn btn-primary" href="{{ url_for('encounter.open_new_encounter_facility') }}" role="button">Open a new encounter</a>
+        </div>
+        <div class="row top-left-buffer">
+            <a class="btn btn-primary" href="#" role="button">Close an open encounter</a>
+        </div>
+        <div class="row top-left-buffer">
+            <a class="btn btn-primary" href="#" role="button">Enter a completed encounter</a>
+        </div>
+        <div class="row top-left-buffer">
+            <a class="btn btn-primary" href="#" role="button">Edit an existing encounter</a>
+        </div>    
+    </div>    
+</div>
+{% endblock %}

@@ -65,8 +65,10 @@ def login():
             if person.is_admin:
                 return redirect(url_for('home.admin_dashboard'))
             else:
-                return redirect(url_for('home.dashboard'))
-           #return redirect('http://www.ibm.com')
+                if person.is_facility:
+                    return redirect(url_for('home.dashboard_facility'))
+                else:
+                    return redirect(url_for('home.dashboard'))
 
         # when login details are incorrect
         else:

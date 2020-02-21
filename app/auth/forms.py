@@ -11,6 +11,8 @@ class RegistrationForm(FlaskForm):
     """
     Form for users to create new account
     """
+    #login_kind = RadioField('Type of login', default = 'Facility', choices=[('Facility','Facility-wide login'),('Individual','Individual login')])
+
     facility_id = SelectField(u'Facilty', coerce=int) 
     role_id = SelectField(u'Role', coerce=int)
     email = StringField('Email (optional)', validators=[
@@ -34,7 +36,6 @@ class LoginForm(FlaskForm):
     """
     Form for users to login
     """
-    login_kind = RadioField('Type of login', default = 'Facility', choices=[('Facility','Facility-wide login'),('Individual','Individual login')])
     username = StringField('User name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')

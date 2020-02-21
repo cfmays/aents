@@ -1,6 +1,6 @@
 # app/home/views.py
 
-from flask import render_template
+from flask import abort, render_template
 from flask_login import current_user, login_required
 
 from . import home
@@ -30,3 +30,14 @@ def admin_dashboard():
         abort(403)
 
     return render_template('home/admin_dashboard.html', title="Dashboard")
+
+@home.route('/dashboard_facility')
+@login_required
+def dashboard_facility():
+    # prevent individual users from accessing the facility-wide dashboard
+    if not current_user.is_facility:
+        abort(403)
+    """
+    Render the dashboard  template for a facility-wide login on the /dashboard_facility route
+    """
+    return render_template('home/dashboard_facility.html', title="Dashboard")

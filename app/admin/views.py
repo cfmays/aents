@@ -4,9 +4,9 @@ from flask import abort, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 
 from . import admin
-from .forms import FacilityForm, RoleForm 
+from .forms import FacilityForm, RoleForm, AnimalForm
 from .. import db
-from ..models import Facility, Role, Encounter
+from ..models import Facility, Role, Encounter, Animal
 
 def check_admin():
     """
@@ -214,3 +214,91 @@ def list_people():
     roles = Role.query.all()
     return render_template('admin/roles/roles.html',
                            roles=roles, title='Roles')
+
+@admin.route('/animals', methods=['GET', 'POST'])
+@login_required
+def list_animals():
+    """
+    List all animals
+    """
+    check_admin()
+
+    animals = Animal.query.all()
+
+    return render_template('admin/animals/animals.html',
+                           animals=animals, title="Animals")
+
+@admin.route('/animals/add', methods=['GET', 'POST'])
+@login_required
+def add_animal():
+    """
+    Add an animal to the database
+    """
+    check_admin()
+
+    add_animal = True
+
+    form = AnimalForm()
+    if form.validate_on_submit():
+        animal = Animal(name=form.name.data)
+
+        try:
+            # add animal to the database
+            db.session.add(animal)
+            db.session.commit()
+            flash('You have successfully added a new animal.')
+        except:
+            # in case animal name already exists
+            flash('Error: animal name already exists.')
+
+        # redirect to the animals page
+        return redirect(url_for('admin.list_animals'))
+
+    # load animal template
+    return render_template('admin/animals/animal.html', add_animal=add_animal,
+                           form=form, title='Add Animal')
+
+
+@admin.route('/animals/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_animal(id):
+    """
+    Edit an animal
+    """
+    check_admin()
+
+    add_animal = False
+
+    animal = Animal.query.get_or_404(id)
+    form = AnimalForm(obj=animal)
+    if form.validate_on_submit():
+        animal.name = form.name.data
+        db.session.add(animal)
+        db.session.commit()
+        flash('You have successfully edited the animal.')
+
+        # redirect to the animals page
+        return redirect(url_for('admin.list_animals'))
+
+    form.name.data = animal.name
+    return render_template('admin/animals/animal.html', add_animal=add_animal,
+                           form=form, title="Edit Animal")
+
+
+@admin.route('/animals/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_animal(id):
+    """
+    Delete an animal from the database
+    """
+    check_admin()
+
+    animal = Animal.query.get_or_404(id)
+    db.session.delete(animal)
+    db.session.commit()
+    flash('You have successfully deleted the animal.')
+
+    # redirect to the animals page
+    return redirect(url_for('admin.list_animals'))
+
+    return render_template(title="Delete Animal")

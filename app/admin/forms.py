@@ -21,3 +21,9 @@ class RoleForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+class AnimalForm(FlaskForm):
+    """
+    Form for admin to add or edit an animal
+    """
+    name = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Submit')

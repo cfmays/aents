@@ -1,0 +1,18 @@
+<!-- app/templates/encounters/open_new_encounter.html -->
+
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}Open Encounter{% endblock %}
+{% block body %}
+<div class="content-section">
+  <br/>
+  {{ utils.flashed_messages() }}
+  <br/>
+  <div class="center">
+    <h1>Open a new encounter</h1>
+    <br/>
+    {{ wtf.quick_form(form) }}
+  </div>
+</div>
+{% endblock %}

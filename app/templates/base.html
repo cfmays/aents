@@ -24,7 +24,9 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
-                {% if current_user.is_admin %}
+                {% if current_user.is_facility %}
+                     <li><a href="{{ url_for('home.dashboard_facility') }}">Dashboard</a></li>                   
+                {% elif current_user.is_admin %}
                     <li><a href="{{ url_for('home.admin_dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ url_for('admin.list_facilities') }}">Facilities</a></li>
                     <li><a href="{{ url_for('admin.list_roles') }}">Roles</a></li>

@@ -40,7 +40,8 @@ def open_new_encounter_facility():
         print('HERE is the datetime:  ', start_datetime)
         encounter = Encounter(person_id = form.person_id.data,
                                 animal_id=form.animal_id.data,
-                                check_out_time=start_datetime)
+                                check_out_time=start_datetime,
+                                enc_date=form.start_date.data)
         # add encounter to the database
         db.session.add(encounter)
         db.session.commit()

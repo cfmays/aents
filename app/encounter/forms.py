@@ -1,7 +1,7 @@
 # app/encounter/forms.py
 
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, ValidationError, SelectField, BooleanField, TimeField
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, SelectField, BooleanField, TimeField, DateField
 from wtforms.validators import DataRequired, Email, EqualTo, Optional
 
 from ..models import Person, Animal, Encounter
@@ -20,5 +20,6 @@ class OpenEncounterFormFacility(FlaskForm):
     """     
     person_id = SelectField(u'Person', coerce=int)
     animal_id = SelectField(u'Animal', coerce=int)
-    start_time = TimeField(u'Start Time', format='%h:%m')
+    start_date = DateField(u'Start Date', format='%Y-%m-%d')
+    start_time = TimeField(u'Start Time')
     submit = SubmitField('Save')
